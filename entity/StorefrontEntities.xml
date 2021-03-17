@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2017 RidgeCrest Herbals. All Rights Reserved. -->
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-2.1.xsd">
+
+    <entity entity-name="Option" package="storefront.product">
+        <field name="option" type="id"/>
+    </entity>
+
+    <entity entity-name="Category" package="storefront.product">
+        <field name="categoryId" type="id" is-pk="true"/>
+        <field name="name" type="text-short"/>
+        <field name="slug" type="text-short"/>
+        <field name="path" type="text-medium"/>
+    </entity>
+
+    <entity entity-name="MediaGallery" package="storefront.product">
+        <field name="image" type="text-medium"/>
+        <field name="pos" type="number-integer"/>
+        <field name="typ" type="text-short"/>
+        <field name="lab" type="text-short"/>
+        <field name="vid" type="text-short"/>
+    </entity>
+
+    <entity entity-name="Values" package="storefront.product">
+        <field name="valueIndex" type="id"/>
+        <field name="label" type="text-short"/>
+    </entity>
+
+    <entity entity-name="ConfigurableOptions" package="storefront.product">
+        <field name="id" type="id"/>
+        <field name="attributeId" type="id"/>
+        <field name="label" type="text-short"/>
+        <field name="position" type="number-integer"/>
+
+        <relationship type="many" related="storefront.product.Values" short-alias="values"/>
+    </entity>
+
+    <entity entity-name="Stock" package="storefront.product">
+        <field name="isInStock" type="text-indicator"/>
+        <field name="qty" type="number-integer"/>
+    </entity>
+
+    <entity entity-name="Product" package="storefront.product">
+        <field name="id" type="id" is-pk="true"/>
+        <field name="name" type="text-short"/>
+        <field name="image" type="text-medium"/>
+        <field name="sku" type="id"/>
+        <field name="urlKey" type="text-medium"/>
+        <field name="urlPath" type="text-medium"/>
+        <field name="typeId" type="text-short"/>
+        <field name="price" type="number-float"/>
+        <field name="specialPrice" type="number-float"/>
+        <field name="priceInclTax" type="number-float"/>
+        <field name="specialPriceInclTax" type="number-float"/>
+        <field name="specialFromDate" type="date-time"/>
+        <field name="specialToDate" type="date-time"/>
+        <field name="status" type="number-integer"/>
+        <field name="visibility" type="number-integer"/>
+        <field name="color" type="text-short"/>
+        <field name="colorOption" type="text-intermediate"/>
+        <field name="size" type="text-short"/>
+        <field name="sizeOption" type="text-intermediate"/>
+
+        <relationship type="many" related="storefront.product.Option" short-alias="size_options"/>
+        <relationship type="many" related="storefront.product.Option" short-alias="color_options"/>
+        <relationship type="many" related="storefront.product.Option" short-alias="category_ids"/>
+        <relationship type="many" related="storefront.product.Category" short-alias="category"/>
+        <relationship type="many" related="storefront.product.MediaGallery" short-alias="media_gallery"/>
+        <relationship type="many" related="storefront.product.ConfigurableOptions" short-alias="configurable_options"/>
+        <relationship type="one" related="storefront.product.Stock" short-alias="stock"/>
+        <relationship type="many" related="storefront.product.Product" short-alias="configurable_children"/>
+    </entity>
+
+</entities>
